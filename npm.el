@@ -36,11 +36,15 @@
 
 (defconst npm-mode-map compilation-mode-map)
 
+(defun colorize-compilation-buffer ()
+  (ansi-color-apply-on-region compilation-filter-start (point)))
+
 (define-derived-mode npm-mode compilation-mode "NPM"
   "Major mode for the NPM compilation buffer."
   (use-local-map npm-mode-map)
   (setq major-mode 'npm-mode)
   (setq mode-name "NPM")
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer 0 t)
   (setq-local truncate-lines t))
 
 ;;;###autoload
